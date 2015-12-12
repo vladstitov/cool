@@ -7,7 +7,8 @@ var uplight;
         function Camera(w, h) {
             this.w = w;
             this.h = h;
-            this.video = document.getElementById('myVideo');
+            // this.video = <HTMLVideoElement>document.getElementById('myVideo');
+            this.video = document.createElement('video');
             //this.video.width=w;
             // this.video.height=h;
             this.initCamera();
@@ -35,7 +36,7 @@ var uplight;
             else {
                 video.width = video.videoWidth;
                 video.height = video.videoHeight;
-                var dw = this.w / video.width;
+                // var dw:number = this.w/ video.width;
                 //  video.style.transform = 'scale(' + dw + ')';
                 // video.style['-o-transform'] = 'scale(' + dw + ')';
                 // video.style['-webkit-transform'] = 'scale(' + dw+ ')';

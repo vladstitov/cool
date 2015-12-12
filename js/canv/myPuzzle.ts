@@ -21,7 +21,7 @@ module uplight{
 	  private Hs:number = 480;
 	  private D:number;
 
-		images: HTMLImageElement[];
+	  images: HTMLImageElement[];
 	  private imageHolder: ImageHolder
 	  private camera: Camera
 	  public stage: c.Stage;
@@ -118,14 +118,26 @@ module uplight{
 
 	  }
 	  private setDemetions():void{
+
 		  this.canvas.height = this.H;
 		  this.canvas.width = this.W;
 		  this.stage.setBounds(0, 0, this.W, this.H);
 	  }
-		private init(): void {
-			var w:number = screen.width;
-			var h:number = screen.height;
 
+	 /////////////////////////////////////////////////////////////////
+
+	  private init(): void {
+			var w:number = screen.width-30;
+			var h:number = screen.height-30;
+		  if(w<this.Ws) this.W=w;
+		  else this.W=this.Ws;
+
+		  if(h<this.Hs) this.H=h;
+		  else this.H=this.Hs;
+
+
+
+/*
 console.log(w+'   '+h);
 			if(w<this.Ws){
 				if(typeof window.orientation !== 'undefined'){
@@ -146,6 +158,7 @@ console.log(w+'   '+h);
 				this.W = this.Ws;
 				this.H = this.Hs;
 			}
+*/
 
 
 

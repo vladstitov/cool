@@ -29,9 +29,9 @@ module uplight{
         }
 
 
-
         constructor(private w:number,private h:number){
-          this.video = <HTMLVideoElement>document.getElementById('myVideo');
+         // this.video = <HTMLVideoElement>document.getElementById('myVideo');
+            this.video = <HTMLVideoElement>document.createElement('video');
             //this.video.width=w;
            // this.video.height=h;
             this.initCamera();
@@ -44,14 +44,14 @@ module uplight{
 
 
         private _onCameraReady(): void {
-            var  video = this.video
+            var  video = this.video;
            console.log(this.w+'  '+video.width+' video.videoWidth '+video.videoWidth +'  height '+this.h+'  '+video.height+'  video.videoHeight '+video.videoHeight);
 
             if (video.videoWidth < 100) setTimeout(() => this._onCameraReady(), 1000);
             else {
                 video.width = video.videoWidth;
                 video.height = video.videoHeight;
-                var dw:number = this.w/ video.width;
+               // var dw:number = this.w/ video.width;
 
               //  video.style.transform = 'scale(' + dw + ')';
                // video.style['-o-transform'] = 'scale(' + dw + ')';

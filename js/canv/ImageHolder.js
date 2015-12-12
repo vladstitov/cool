@@ -31,11 +31,16 @@ var uplight;
         ImageHolder.prototype.createVideo = function (video) {
             this.isVideo = true;
             this.bmp = new c.Bitmap(video);
-            // this.bmp.setBounds(0,0,video.videoWidth,video.videoHeight);
-            console.log(video.videoWidth + '   ' + video.videoHeight);
             this.container.removeAllChildren();
             this.container.addChild(this.bmp);
-            //  this.centerImage(video.videoWidth, video.videoHeight);
+            var recSt = this.stage.getBounds();
+            var rec = this.bmp.getBounds();
+            if (recSt.width < rec.width) {
+                this.bmp.x = (recSt.width - rec.width) / 2;
+            }
+            if (recSt.height < rec.height) {
+                this.bmp.y = (recSt.height - rec.height) / 2;
+            }
         };
         ImageHolder.prototype.createImage = function (url) {
             this.container.removeAllChildren();

@@ -93,30 +93,41 @@ var uplight;
             this.canvas.width = this.W;
             this.stage.setBounds(0, 0, this.W, this.H);
         };
+        /////////////////////////////////////////////////////////////////
         Puzzle.prototype.init = function () {
             var _this = this;
-            var w = screen.width;
-            var h = screen.height;
-            console.log(w + '   ' + h);
-            if (w < this.Ws) {
-                if (typeof window.orientation !== 'undefined') {
-                    if (w > h) {
-                        this.H = h - 30;
-                        this.W = Math.round(this.H / this.D);
-                    }
-                    else {
-                        this.W = w - 30;
-                        this.H = Math.round(this.W / this.D);
-                    }
-                }
-                else {
-                    console.log(' window.orientation  ' + window.orientation);
-                }
-            }
-            else {
+            var w = screen.width - 30;
+            var h = screen.height - 30;
+            if (w < this.Ws)
+                this.W = w;
+            else
                 this.W = this.Ws;
+            if (h < this.Hs)
+                this.H = h;
+            else
                 this.H = this.Hs;
-            }
+            /*
+            console.log(w+'   '+h);
+                        if(w<this.Ws){
+                            if(typeof window.orientation !== 'undefined'){
+                                if(w>h){
+                                    this.H = h-30;
+                                    this.W = Math.round(this.H/this.D);
+            
+                                }else{
+                                    this.W = w -30;
+                                    this.H = Math.round(this.W/this.D);
+                                }
+                            }else{
+                                console.log(' window.orientation  '+ window.orientation);
+                            }
+            
+            
+                        }else {
+                            this.W = this.Ws;
+                            this.H = this.Hs;
+                        }
+            */
             console.log(' after all  ' + this.W + '   ' + this.H);
             this.canvas = document.getElementById('PuzzleCanvas');
             this.stage = new c.Stage(this.canvas);

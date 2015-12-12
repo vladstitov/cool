@@ -6,6 +6,7 @@
 declare var CLICK:string;
 module uplight{
     import c = createjs;
+    import Rect = createjs.Graphics.Rect;
   export  class Puzzles {
       constructor( private stage: c.Stage,bmp: c.Bitmap,res:string) {
 
@@ -17,33 +18,55 @@ module uplight{
               return
           }
 
+
           var rec:c.Rectangle = bmp.getBounds();
 console.log(rec);
-          var dx: number = rec.width / cols;
-          var dy: number = rec.height / rows;
-          var sc: number = bmp.scaleX;
+
+          var recSt:c.Rectangle = stage.getBounds();
+          console.log(recSt);
+          var W:number = rec.width;
+          var H:number = rec.height;
+          var offsetX:number=0;
+          var offsetY:number=0;
+          if(recSt.width<W){
+              offsetX=(W-recSt.width)/2;
+              W=recSt.width;
+          }
+
+          if(recSt.height<H){
+              offsetY=(H-recSt.height)/2;
+              H = recSt.height;
+          }
+
+          var dx: number = W / cols;
+          var dy: number = H / rows;
+
+         // var sc: number = bmp.scaleX;
           var cont: c.Container = new c.Container();
-          this.stage.addChild(cont);
-         cont.setBounds(0,0,rec.width,rec.height);
+
           var bmps: c.Bitmap[] = [];
           var rects:c.Rectangle[]=[];
 
-
           for (var i = 0, n = cols; i < n; i++) {
               for (var j = 0; j < rows; j++) {
-                  var r: c.Rectangle = new c.Rectangle(i * dx, j * dy, dx, dy);
-                 rects.push(r);
+                  var r: c.Rectangle = new c.Rectangle((i * dx)+offsetX, (j * dy)+offsetY, dx, dy);
+                 //rects.push(r);
                   var b2: c.Bitmap = new c.Bitmap(bmp.image);
                   b2.name= 'b_'+i+'_'+j;
                   b2.sourceRect = r;
+                  b2.setBounds(i * dx,j * dy,dx,dy);
                   bmps.push(b2);
+                  rects.push(b2.getBounds());
                   b2.addEventListener(CLICK, (evt: MouseEvent) => this.onImageClicked(evt));
-                  b2.x = r.x;
-                  b2.y = r.y;
+                 // b2.x = i * dx;
+                  //b2.y = j * dy;
+
                   cont.addChild(b2);
               }
           }
-
+          this.stage.addChild(cont);
+          cont.setBounds(0,0,W,H);
+          cont.x=0;
           this.rects = rects;
           this.puzzles = bmps;
          this.hiliter = new c.Shape((new c.Graphics()).setStrokeStyle(3).beginStroke('#FFFFFF').drawRect(0, 0, r.width, r.height));
