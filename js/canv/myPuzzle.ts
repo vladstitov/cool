@@ -17,6 +17,10 @@ module uplight{
 		W: number;
 		H: number;
 
+	  private Ws:number= 640;
+	  private Hs:number = 480;
+	  private D:number;
+
 		images: HTMLImageElement[];
 	  private imageHolder: ImageHolder
 	  private camera: Camera
@@ -31,10 +35,11 @@ module uplight{
 		// private stage: createjs.Stage;
 
 		constructor(private $view:JQuery) {
+			this.D= this.Hs/this.Ws;
 			this.view = < HTMLDivElement>$view.get(0);
 			if (this.view) this.init();
-
 		}
+
 		private catImage(): void {
 			// this.ctx.drawImage(this.canvas, 0, 0, 300, 300);
 
@@ -48,15 +53,16 @@ module uplight{
 		}
 
 	  private onCameraReady(video:HTMLVideoElement): void {
+		//console.log('onCameraReady '+video.videoWidth+'  '+video.videoHeight);
+
 		  this.imageHolder.createVideo(this.camera.video);
 		  c.Ticker.addEventListener('tick', this.stage);
+
 	  }
 
 	  private initTools():void{
-
-		this.$btnStart = this.$view.find('[data-id=btnStart]:first').click(()=>{
+			this.$btnStart = this.$view.find('[data-id=btnStart]:first').click(()=>{
 			this.engine = new Puzzles(this.stage,this.imageHolder.bmp,this.$selRes.val());
-
 			this.imageHolder.removeImage();
 			this.engine.onGameOver = ()=>this.gameOver();
 			if (!this.imageHolder.bmp) {
@@ -69,6 +75,11 @@ module uplight{
 			c.Ticker.addEventListener('tick', this.stage);
 		});
 
+		  $(window ).on( "orientationchange", ( event ) =>{
+			  console.log(' orientationchange '+window.orientation);
+			  if(this.camera)this.camera.onDemChanged();
+
+		  });
 		this.$btnUseCamera = this.$view.find('[data-id=btnUseCamera]:first').click(()=>{
 			if(this.engine)this.engine.destroy();
 			if (!this.camera){
@@ -106,13 +117,44 @@ module uplight{
 		  });
 
 	  }
+	  private setDemetions():void{
+		  this.canvas.height = this.H;
+		  this.canvas.width = this.W;
+		  this.stage.setBounds(0, 0, this.W, this.H);
+	  }
 		private init(): void {
+			var w:number = screen.width;
+			var h:number = screen.height;
+
+console.log(w+'   '+h);
+			if(w<this.Ws){
+				if(typeof window.orientation !== 'undefined'){
+					if(w>h){
+						this.H = h-30;
+						this.W = Math.round(this.H/this.D);
+
+					}else{
+						this.W = w -30;
+						this.H = Math.round(this.W/this.D);
+					}
+				}else{
+					console.log(' window.orientation  '+ window.orientation);
+				}
+
+
+			}else {
+				this.W = this.Ws;
+				this.H = this.Hs;
+			}
+
+
+
+			console.log(' after all  '+this.W +'   '+this.H);
 			this.canvas = <HTMLCanvasElement> document.getElementById('PuzzleCanvas');
 			this.stage = new c.Stage(this.canvas);
 			this.ctx = this.canvas.getContext('2d');
-			this.W = this.canvas.width;
-			this.H = this.canvas.height;
-			this.stage.setBounds(0, 0, this.W, this.H);
+
+			this.setDemetions();
 			this.imageHolder = new ImageHolder(this.stage);
 			this.initTools();
 			this.$puzzleOver = $('#puzzleOver');
@@ -131,6 +173,7 @@ module uplight{
 		  this.$puzzleOver.find('[data-id=gameMessage]:first').text("game Over in: "+Math.round(((new Date()).getTime()-this.strtTime)/1000)+' sec');
 		  this.$puzzleOver.fadeIn();
 		  c.Ticker.removeEventListener('tick', this.stage.update);
+		  this.engine = null;
 	  }
 
 	}

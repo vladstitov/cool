@@ -66,18 +66,14 @@ var canv;
             this.isChaos = true;
             for (var i = 0, n = this.bmps.length; i < n; i++) {
                 // c.Tween.get(this.bmps[i]).to({ x: this.rects[n - i - 1].x, y: this.rects[n - i - 1].y }, 1500).call(function () { createjs.Ticker.removeEventListener("tick", stage); });
-                c.Tween.get(this.bmps[i]).to({ x: newAr[i].x, y: newAr[i].y }, 1000, c.Ease.circOut).call(function () {
-                    createjs.Ticker.removeEventListener("tick", stage.update);
-                });
+                c.Tween.get(this.bmps[i]).to({ x: newAr[i].x, y: newAr[i].y }, 1000, c.Ease.circOut).call(function () { createjs.Ticker.removeEventListener("tick", stage.update); });
             }
             createjs.Ticker.addEventListener("tick", stage);
         };
         ImageHolder.prototype.backImage = function () {
             this.isChaos = false;
             for (var i = 0, n = this.bmps.length; i < n; i++) {
-                c.Tween.get(this.bmps[i]).to({ x: this.rects[i].x, y: this.rects[i].y }, 1000, c.Ease.circOut).call(function () {
-                    createjs.Ticker.removeEventListener("tick", stage.update);
-                });
+                c.Tween.get(this.bmps[i]).to({ x: this.rects[i].x, y: this.rects[i].y }, 1000, c.Ease.circOut).call(function () { createjs.Ticker.removeEventListener("tick", stage.update); });
             }
             createjs.Ticker.addEventListener("tick", stage);
         };
@@ -138,8 +134,6 @@ var canv;
         return ImageHolder;
     })();
 })(canv || (canv = {}));
-var trace = trace || function (v) {
-    console.log(v);
-};
+var trace = trace || function (v) { console.log(v); };
 var c = new canv.Gallery('myCanvas');
 //# sourceMappingURL=myCanvas.js.map

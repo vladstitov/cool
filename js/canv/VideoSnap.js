@@ -41,9 +41,7 @@ var canv;
         VideoSnap.prototype.minifyImage = function () {
             if (!this.currentImage)
                 return;
-            c.Tween.get(this.currentImage).to({ x: this.wasX, y: this.wasY, scaleX: this.scale, scaleY: this.scale }, 500).call(function () {
-                c.Ticker.removeEventListener("tick", this.tick);
-            });
+            c.Tween.get(this.currentImage).to({ x: this.wasX, y: this.wasY, scaleX: this.scale, scaleY: this.scale }, 500).call(function () { c.Ticker.removeEventListener("tick", this.tick); });
             c.Ticker.addEventListener("tick", this.stage);
             //this.currentImage.x = this.wasX;
             //this.currentImage.y = this.wasY;

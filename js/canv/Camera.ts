@@ -13,33 +13,63 @@ module uplight{
                 alert("Your browser dosn't support Camera");
                 return null;
             }
-            console.log('initcamera');
-            n.getUserMedia({ video: true, audio: true }, (cam) => this.onCameraSuccess(cam), this.onCameraFail);
+
+
+            n.getUserMedia({ video:true
+            //{
+               // mandatory:{
+                  // maxWidth: w,
+                  //  maxHeight: h
+                   // minWidth: 330,
+                   // minHeight: 240
+               // }
+           // }
+                , audio: true }, (cam) => this.onCameraSuccess(cam), this.onCameraFail);
 
         }
 
-        constructor(private  w: number,private h: number) {
-        this.initCamera();
+
+
+        constructor(private w:number,private h:number){
+          this.video = <HTMLVideoElement>document.getElementById('myVideo');
+            //this.video.width=w;
+           // this.video.height=h;
+            this.initCamera();
         }
 
 
-        private _onCameraReady(video: HTMLVideoElement): void {
-            this.video = video;
+       onDemChanged():void{
+           console.log('onDemChanged  '+this.video.videoWidth+' '+this.video.videoHeight );
+       }
 
-            if (video.videoWidth < 100) setTimeout(() => this._onCameraReady(video), 100);
-            else this.onCameraReady(video);
+
+        private _onCameraReady(): void {
+            var  video = this.video
+           console.log(this.w+'  '+video.width+' video.videoWidth '+video.videoWidth +'  height '+this.h+'  '+video.height+'  video.videoHeight '+video.videoHeight);
+
+            if (video.videoWidth < 100) setTimeout(() => this._onCameraReady(), 1000);
+            else {
+                video.width = video.videoWidth;
+                video.height = video.videoHeight;
+                var dw:number = this.w/ video.width;
+
+              //  video.style.transform = 'scale(' + dw + ')';
+               // video.style['-o-transform'] = 'scale(' + dw + ')';
+               // video.style['-webkit-transform'] = 'scale(' + dw+ ')';
+                //video.style['-moz-transform'] = 'scale(' + dw + ')';
+
+                this.onCameraReady(video);
+            }
         }
-        private onCameraSuccess(cam) {
-            console.log(cam);
+
+        private onCameraSuccess(cam:MediaSource) {
+           // console.log(cam);
             this.camera = cam;
             var w: any = window;
             var URL = w.URL || w.webkitURL;
-            var video: HTMLVideoElement = document.createElement('video');
-            video.width = this.w;
-            video.height = this.h;
-            video.src = URL.createObjectURL(cam);
-            video.play();
-            setTimeout(() => this._onCameraReady(video), 100);
+            this.video.src = URL.createObjectURL(cam);
+           //video.play();
+           setTimeout(() => this._onCameraReady(), 100);
 
         }
 

@@ -11,6 +11,9 @@ var uplight;
         // private stage: createjs.Stage;
         function Puzzle($view) {
             this.$view = $view;
+            this.Ws = 640;
+            this.Hs = 480;
+            this.D = this.Hs / this.Ws;
             this.view = $view.get(0);
             if (this.view)
                 this.init();
@@ -25,6 +28,7 @@ var uplight;
             return btn;
         };
         Puzzle.prototype.onCameraReady = function (video) {
+            //console.log('onCameraReady '+video.videoWidth+'  '+video.videoHeight);
             this.imageHolder.createVideo(this.camera.video);
             c.Ticker.addEventListener('tick', this.stage);
         };
@@ -42,6 +46,11 @@ var uplight;
                 _this.imageHolder.removeImage();
                 _this.strtTime = new Date().getTime();
                 c.Ticker.addEventListener('tick', _this.stage);
+            });
+            $(window).on("orientationchange", function (event) {
+                console.log(' orientationchange ' + window.orientation);
+                if (_this.camera)
+                    _this.camera.onDemChanged();
             });
             this.$btnUseCamera = this.$view.find('[data-id=btnUseCamera]:first').click(function () {
                 if (_this.engine)
@@ -79,14 +88,40 @@ var uplight;
                 });
             });
         };
+        Puzzle.prototype.setDemetions = function () {
+            this.canvas.height = this.H;
+            this.canvas.width = this.W;
+            this.stage.setBounds(0, 0, this.W, this.H);
+        };
         Puzzle.prototype.init = function () {
             var _this = this;
+            var w = screen.width;
+            var h = screen.height;
+            console.log(w + '   ' + h);
+            if (w < this.Ws) {
+                if (typeof window.orientation !== 'undefined') {
+                    if (w > h) {
+                        this.H = h - 30;
+                        this.W = Math.round(this.H / this.D);
+                    }
+                    else {
+                        this.W = w - 30;
+                        this.H = Math.round(this.W / this.D);
+                    }
+                }
+                else {
+                    console.log(' window.orientation  ' + window.orientation);
+                }
+            }
+            else {
+                this.W = this.Ws;
+                this.H = this.Hs;
+            }
+            console.log(' after all  ' + this.W + '   ' + this.H);
             this.canvas = document.getElementById('PuzzleCanvas');
             this.stage = new c.Stage(this.canvas);
             this.ctx = this.canvas.getContext('2d');
-            this.W = this.canvas.width;
-            this.H = this.canvas.height;
-            this.stage.setBounds(0, 0, this.W, this.H);
+            this.setDemetions();
             this.imageHolder = new uplight.ImageHolder(this.stage);
             this.initTools();
             this.$puzzleOver = $('#puzzleOver');
@@ -101,6 +136,7 @@ var uplight;
             this.$puzzleOver.find('[data-id=gameMessage]:first').text("game Over in: " + Math.round(((new Date()).getTime() - this.strtTime) / 1000) + ' sec');
             this.$puzzleOver.fadeIn();
             c.Ticker.removeEventListener('tick', this.stage.update);
+            this.engine = null;
         };
         return Puzzle;
     })();

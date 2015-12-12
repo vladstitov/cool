@@ -12,12 +12,14 @@ module uplight{
         public bmp: c.Bitmap
 
 
+
         private isVideo: boolean;
 
         removeImage(): void {
             this.container.removeAllChildren();
             c.Ticker.removeEventListener('tick', this.stage.update);
         }
+
         createVideo(video: HTMLVideoElement): void    {
              this.isVideo = true;
             this.bmp = new c.Bitmap(video);

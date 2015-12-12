@@ -8,6 +8,7 @@ module uplight{
     import c = createjs;
   export  class Puzzles {
       constructor( private stage: c.Stage,bmp: c.Bitmap,res:string) {
+
           var ar: string[] = res.split('x');
           var cols = Number(ar[0]);
           var rows = Number(ar[1]);
@@ -15,8 +16,9 @@ module uplight{
               alert('value of columns is wrong');
               return
           }
-          var rec:c.Rectangle = bmp.getBounds();
 
+          var rec:c.Rectangle = bmp.getBounds();
+console.log(rec);
           var dx: number = rec.width / cols;
           var dy: number = rec.height / rows;
           var sc: number = bmp.scaleX;
@@ -48,6 +50,9 @@ module uplight{
           this.contPuzzles = cont;
         this.chaosImage();
 
+
+      }
+      onDimentionChanged(w:number,h:number):void{
 
       }
 
