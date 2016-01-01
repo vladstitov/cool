@@ -93,9 +93,7 @@ var uplight;
             newAr = this.shuffle(newAr);
             this.isChaos = true;
             this.inProgres = true;
-            setTimeout(function () {
-                _this.inProgres = false;
-            }, 1100);
+            setTimeout(function () { _this.inProgres = false; }, 1100);
             var bmps = this.puzzles;
             for (var i = 0, n = this.puzzles.length; i < n; i++) {
                 // trace(bmps[i]);
@@ -109,9 +107,7 @@ var uplight;
             if (this.inProgres)
                 return;
             this.inProgres = true;
-            setTimeout(function () {
-                _this.inProgres = false;
-            }, 1100);
+            setTimeout(function () { _this.inProgres = false; }, 1100);
             this.isChaos = false;
             var bmps = this.puzzles;
             for (var i = 0, n = bmps.length; i < n; i++) {
@@ -166,10 +162,7 @@ var uplight;
             this.contPuzzles.addChild(bmp2);
             c.Tween.get(bmp1).to({ x: bmp2.x, y: bmp2.y }, 400, c.Ease.circOut);
             c.Tween.get(bmp2).to({ x: bmp1.x, y: bmp1.y }, 400, c.Ease.circOut);
-            setTimeout(function () {
-                _this.checkPositions(bmp1, bmp2);
-                _this.inProgres = false;
-            }, 500);
+            setTimeout(function () { _this.checkPositions(bmp1, bmp2); _this.inProgres = false; }, 500);
         };
         Puzzles1.prototype.shuffle = function (o) {
             for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x)
