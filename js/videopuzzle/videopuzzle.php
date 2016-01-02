@@ -79,7 +79,7 @@
     <script>
         var CLICK = CLICK||'click';
             require(['easel','tween'],function(){
-                require(['canv/ImageHolder','canv/Camera','canv/Puzzles','canv/myPuzzle'], function() {
+                require(['videopuzzle/ImageHolder','videopuzzle/Camera','videopuzzle/Puzzles','videopuzzle/myPuzzle'], function() {
                     var str = '[data-ctr="uplight.Puzzle"]';
                     var myPuzzle = new uplight.Puzzle($(str));
                 });

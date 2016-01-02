@@ -99,11 +99,13 @@ module uplight{
 		  for (var i = 0, n = ar.length; i < n; i++)  out+='<option>' + ar[i] + '</option>';
 		  this.$selRes.html(out);
 
-		  $.get('rem/index.php', { a: 'getexamples' }, 'json').done((resp) => {
+		  $.get('js/videopuzzle/service.php').done((resp) => {
 
-			  var res:any = JSON.parse(resp);
-			  var out:string='';
-			  var ar:string[] = res.result;
+			//  var res:any = JSON.parse(resp);
+			 var out:string='';
+			console.log(resp);
+
+			  var ar:string[] = resp;
 			  for (var i = 0, n = ar.length; i < n; i++) out+='<img src="'+ar[i]+'" />';
 			  this.$images.html(out);
 			  this.$images.on(CLICK,'img',(evt:JQueryEventObject)=>{

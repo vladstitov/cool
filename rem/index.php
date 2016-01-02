@@ -18,10 +18,10 @@ switch(array_shift($a)){
         $ctr=new Locations();
        $result = $ctr->process($a,$data);	   
         break;
-	case 'getexamples':
+	case 'get_puzzle_images':
 	$result= new stdClass();
-	$ar = array_values(array_diff(scandir('../images/examples'),array('.', '..','_notes')));
-	$result->result=explode(',','images/examples/'.implode(',images/examples/',$ar));	
+	$ar = array_values(array_diff(scandir('../videopuzzle/imgs'),array('.', '..','_notes')));
+	$result->result=explode(',','videopuzzle/imgs'.implode(',videopuzzle/imgs/',$ar));
 	$result->success='success';		
 	break;
 

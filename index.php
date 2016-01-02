@@ -27,14 +27,14 @@
 
         $(document).ready(function(){
 
-            function onHashChanged(){
-                var hash = window.location.hash.split('-');
-                switch(hash[0]){
-                    case '#Puzzle':
-                        $('#Content').load('htms/Puzzle.html');
-                        break
-                }
-            }
+           function onHashChanged(){
+               var hash = window.location.hash.split('-');
+               switch(hash[0]){
+                   case '#Puzzle':
+                       $('#Content').load('js/videopuzzle/videopuzzle.php');
+                       break
+               }
+           }
 
             window.onhashchange =onHashChanged;
 
@@ -42,10 +42,13 @@
     </script>
 </head>
 <body>
+<nav>
+    <a class="btn" href="#">Home</a>
+    <a class="btn" href="#Puzzle">Puzzle</a>
+
+</nav>
 <section id="Content">
-    <?php
-    include 'videopuzzle.php';
-    ?>
+
 
 </section>
 
