@@ -103,7 +103,7 @@ module uplight{
 
 			//  var res:any = JSON.parse(resp);
 			 var out:string='';
-			console.log(resp);
+			//console.log(resp);
 
 			  var ar:string[] = resp;
 			  for (var i = 0, n = ar.length; i < n; i++) out+='<img src="'+ar[i]+'" />';

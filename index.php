@@ -37,6 +37,7 @@
            }
 
             window.onhashchange =onHashChanged;
+            onHashChanged();
 
         });
     </script>

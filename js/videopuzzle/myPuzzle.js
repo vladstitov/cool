@@ -73,7 +73,7 @@ var uplight;
             $.get('js/videopuzzle/service.php').done(function (resp) {
                 //  var res:any = JSON.parse(resp);
                 var out = '';
-                console.log(resp);
+                //console.log(resp);
                 var ar = resp;
                 for (var i = 0, n = ar.length; i < n; i++)
                     out += '<img src="' + ar[i] + '" />';
